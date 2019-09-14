@@ -10,7 +10,7 @@ const baseUrl = 'http://ruuuuu.blog.jp'
 const filterInclude = 'livedoor.blogimg.jp'
 const filterExclude = '-s.'
 const savePath = 'disk/'
-
+const timeout = 30000
 const urls = [baseUrl]
 const images = []
 
@@ -18,7 +18,7 @@ puppeteer
   .launch({args:['--no-sandbox']})
   .then(async function (browser) {
     const pageBase = await browser.newPage()
-    await pageBase.goto(baseUrl)
+    await pageBase.goto(baseUrl,{timeout:timeout})
     const html = await pageBase.content()
     var $ = cheerio.load(html)
 
@@ -61,7 +61,7 @@ function runPage (urls, page) {
   const url = urls.pop()
 
   console.log(`${url}. Remaining URLs: ${urls.length}. Found images: ${images.length}`)
-  page.goto(url).then(() => {
+  page.goto(url,{timeout:timeout}).then(() => {
     page.content().then(html => {
       var $ = cheerio.load(html)
 
