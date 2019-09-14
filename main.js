@@ -15,7 +15,7 @@ const urls = [baseUrl]
 const images = []
 
 puppeteer
-  .launch()
+  .launch({args:['--no-sandbox']})
   .then(async function (browser) {
     const pageBase = await browser.newPage()
     await pageBase.goto(baseUrl)
